@@ -1,0 +1,417 @@
+from typing import Optional, Dict, Any, List
+
+from bugtrace.mcp.app import mcp_server
+from bugtrace.services.scan_context import ScanOptions
+from bugtrace.api.deps import get_scan_service
+
+@mcp_server.tool()
+async def start_bugtrace_scan(
+    target_url: str,
+    scan_type: str = "full",
+    max_depth: int = 2,
+    max_urls: int = 20,
+    safe_mode: Optional[bool] = None,
+    use_vertical: bool = True,
+    focused_agents: Optional[List[str]] = None,
+    param: Optional[str] = None,
+    scan_depth: str = "",
+    auth_token: Optional[str] = None,
+    auth: Optional[Dict[str, Any]] = None,
+    url_list: Optional[List[str]] = None,
+    scope_path: Optional[str] = None,
+) -> Dict[str, Any]:
+    """
+    Start a BugTraceAI security scan using the existing BugTraceAI
+    ScanService and scanning pipeline.
+
+    This MCP tool is only an adapter around the existing BugTraceAI
+    scanning implementation. It does not implement a separate scanner.
+
+    Use only against systems you are authorized to test.
+
+    Args:
+        target_url:
+            Target website or API URL.
+
+        scan_type:
+            Scan mode. Examples:
+            - full
+            - hunter
+            - manager
+            - focused agent name
+
+        max_depth:
+            Maximum crawl depth.
+
+        max_urls:
+            Maximum number of URLs to process.
+
+        safe_mode:
+            Override the global safe-mode configuration.
+            None means use the configured default.
+
+        use_vertical:
+            Enable vertical/advanced scanning.
+
+        focused_agents:
+            Optional list of specific agents, for example:
+            ["xss"]
+            ["sqli"]
+            ["ssrf"]
+
+        param:
+            Optional parameter to target in focused scanning.
+
+        scan_depth:
+            Optional scan-depth override.
+
+        auth_token:
+            Optional pre-authenticated Bearer token.
+
+        auth:
+            Optional authentication configuration.
+
+        url_list:
+            Optional predefined URL list.
+
+        scope_path:
+            Optional path restriction, for example:
+            "/WebPA/"
+
+    Returns:
+        Dictionary containing the scan ID and scan status.
+    """
+
+    if not target_url or not target_url.strip():
+        return {
+            "success": False,
+            "error": "target_url is required"
+        }
+
+    try:
+        # Build the same ScanOptions object used by the existing
+        # BugTraceAI scanning workflow.
+        options = ScanOptions(
+            target_url=target_url.strip(),
+            scan_type=scan_type,
+            safe_mode=safe_mode,
+            max_depth=max_depth,
+            max_urls=max_urls,
+            resume=False,
+            use_vertical=use_vertical,
+            focused_agents=focused_agents or [],
+            param=param,
+            scan_depth=scan_depth,
+            auth_token=auth_token,
+            auth=auth,
+            url_list=url_list,
+            scope_path=scope_path,
+        )
+
+        # Use the existing BugTraceAI ScanService.
+        scan_service = get_scan_service()
+
+        # Start the existing BugTraceAI scanning pipeline.
+        scan_id = await scan_service.create_scan(
+            options,
+            origin="mcp",
+        )
+
+        return {
+            "success": True,
+            "scan_id": scan_id,
+            "target_url": target_url.strip(),
+            "scan_type": scan_type,
+            "status": "started",
+            "message": (
+                f"BugTraceAI scan started successfully. "
+                f"Scan ID: {scan_id}"
+            ),
+        }
+
+    except Exception as e:
+        return {
+            "success": False,
+            "error": str(e),
+            "target_url": target_url.strip(),
+        }
+
+
+@mcp_server.tool()
+async def query_findings(
+    scan_id: int,
+    severity: Optional[str] = None,
+    vuln_type: Optional[str] = None,
+    page: int = 1,
+    per_page: int = 20
+) -> Dict[str, Any]:
+    """
+    Query vulnerability findings from a completed or running scan.
+
+    Retrieves paginated list of security findings with optional filtering
+    by severity level and vulnerability type.
+
+    Args:
+        scan_id:
+            The ID of the scan to query.
+
+        severity:
+            Filter by severity:
+            critical, high, medium, low, info.
+
+        vuln_type:
+            Filter by vulnerability type:
+            xss, sqli, csrf, etc.
+
+        page:
+            Page number. Default: 1.
+
+        per_page:
+            Results per page. Default: 20.
+
+    Returns:
+        Dictionary containing findings data.
+    """
+
+    try:
+        from bugtrace.core.database import get_db_manager
+        from bugtrace.schemas.db_models import ScanTable
+
+        db = get_db_manager()
+
+        with db.get_session() as session:
+            scan_service = get_scan_service()
+
+            # Get the scan from the database.
+            scan = session.get(ScanTable, scan_id)
+
+            if not scan:
+                return {
+                    "error": f"Scan {scan_id} not found",
+                    "scan_id": scan_id
+                }
+
+            # Group findings by severity.
+            vulnerabilities = {
+                "Critical": [],
+                "High": [],
+                "Medium": [],
+                "Low": [],
+                "Informational": []
+            }
+
+            for finding in scan.findings or []:
+                # FindingTable is a SQLModel object, not a dictionary.
+                # Use its typed attributes instead of .get().
+                finding_severity = getattr(finding, "severity", None) or "Informational"
+
+                # Normalize severity names for the response grouping.
+                severity_map = {
+                    "CRITICAL": "Critical",
+                    "HIGH": "High",
+                    "MEDIUM": "Medium",
+                    "LOW": "Low",
+                    "INFO": "Informational",
+                    "INFORMATIONAL": "Informational",
+                }
+
+                finding_severity = severity_map.get(
+                    str(finding_severity).upper(),
+                    "Informational"
+                )
+
+                # Convert the SQLModel object to a JSON-safe dictionary.
+                finding_data = {
+                    "id": finding.id,
+                    "scan_id": finding.scan_id,
+                    "type": (
+                        finding.type.value
+                        if hasattr(finding.type, "value")
+                        else str(finding.type)
+                    ),
+                    "severity": finding_severity,
+                    "details": finding.details,
+                    "payload_used": finding.payload_used,
+                    "reflection_context": (
+                        finding.reflection_context.value
+                        if hasattr(finding.reflection_context, "value")
+                        else (
+                            str(finding.reflection_context)
+                            if finding.reflection_context is not None
+                            else None
+                        )
+                    ),
+                    "confidence_score": finding.confidence_score,
+                    "visual_validated": finding.visual_validated,
+                    "status": (
+                        finding.status.value
+                        if hasattr(finding.status, "value")
+                        else str(finding.status)
+                    ),
+                    "validator_notes": finding.validator_notes,
+                    "proof_screenshot_path": finding.proof_screenshot_path,
+                    "attack_url": finding.attack_url,
+                    "vuln_parameter": finding.vuln_parameter,
+                    "reproduction_command": finding.reproduction_command,
+                }
+
+                vulnerabilities[finding_severity].append(finding_data)
+
+            findings = await scan_service.get_findings(
+                scan_id=scan_id,
+                severity=severity,
+                vuln_type=vuln_type,
+                page=page,
+                per_page=per_page
+            )
+
+            findings["vulnerabilities"] = vulnerabilities
+
+            return findings
+
+    except ValueError as e:
+        return {
+            "error": str(e),
+            "scan_id": scan_id
+        }
+
+    except Exception as e:
+        return {
+            "error": str(e),
+            "scan_id": scan_id
+        }
+
+
+@mcp_server.tool()
+async def export_report(
+    scan_id: int,
+    section: str = "summary"
+) -> Dict[str, Any]:
+    """
+    Export a scan report summary or specific section.
+
+    Args:
+        scan_id:
+            The ID of the scan.
+
+        section:
+            Report section:
+            - summary
+            - critical
+            - full
+
+    Returns:
+        Dictionary containing report information.
+    """
+
+    try:
+        from bugtrace.api.routes.reports import (
+            _find_report_dir,
+            _build_findings_summary,
+            _extract_critical_findings,
+            _build_executive_summary,
+        )
+        from bugtrace.core.database import get_db_manager
+        from bugtrace.schemas.db_models import ScanTable, TargetTable
+
+        db = get_db_manager()
+
+        with db.get_session() as session:
+            scan = session.get(ScanTable, scan_id)
+
+            if not scan:
+                return {
+                    "error": f"Scan {scan_id} not found",
+                    "scan_id": scan_id
+                }
+
+            target = session.get(TargetTable, scan.target_id)
+
+            target_url = (
+                target.url
+                if target
+                else "unknown"
+            )
+
+            scan_status = scan.status
+
+        if scan_status in ("initializing", "running"):
+            return {
+                "error": (
+                    f"Scan {scan_id} is still {scan_status}. "
+                    "Wait for completion."
+                ),
+                "scan_id": scan_id,
+                "status": scan_status,
+            }
+
+        report_dir = _find_report_dir(scan_id)
+
+        if not report_dir:
+            return {
+                "error": f"No report found for scan {scan_id}.",
+                "scan_id": scan_id,
+            }
+
+        findings_summary = _build_findings_summary(report_dir)
+
+        section = section.lower()
+
+        if section == "full":
+
+            md_file = report_dir / "final_report.md"
+
+            if not md_file.is_file():
+                md_file = report_dir / "technical_report.md"
+
+            if not md_file.is_file():
+                return {
+                    "error": "No report file found",
+                    "scan_id": scan_id
+                }
+
+            content = md_file.read_text(
+                encoding="utf-8"
+            )
+
+            # Protect the LLM context window.
+            if len(content) > 8000:
+                original_length = len(content)
+
+                content = (
+                    content[:8000]
+                    + "\n\n... [TRUNCATED — report is too large "
+                    "for chat. Full report has "
+                    + str(original_length)
+                    + " characters] ..."
+                )
+
+        elif section == "critical":
+
+            content = _extract_critical_findings(
+                report_dir,
+                target_url
+            )
+
+        else:
+
+            content = _build_executive_summary(
+                report_dir,
+                target_url,
+                scan_id,
+                findings_summary
+            )
+
+        return {
+            "scan_id": scan_id,
+            "target": target_url,
+            "section": section,
+            "report": content,
+            "findings_summary": findings_summary,
+        }
+
+    except Exception as e:
+        return {
+            "error": str(e),
+            "scan_id": scan_id
+        }

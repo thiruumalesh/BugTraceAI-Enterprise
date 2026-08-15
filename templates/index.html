@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>BugTraceAI</title>
+
+<style>
+body{
+    margin:0;
+    background:#111827;
+    color:white;
+    font-family:Arial,Helvetica,sans-serif;
+}
+
+header{
+    background:#0f172a;
+    padding:15px;
+    font-size:24px;
+    font-weight:bold;
+}
+
+#chat{
+    height:75vh;
+    overflow-y:auto;
+    padding:20px;
+}
+
+.msg{
+    margin:15px 0;
+    padding:12px;
+    border-radius:8px;
+}
+
+.user{
+    background:#2563eb;
+}
+
+.ai{
+    background:#1f2937;
+}
+
+.bottom{
+    display:flex;
+    padding:15px;
+    background:#0f172a;
+}
+
+input{
+    flex:1;
+    padding:12px;
+    font-size:16px;
+}
+
+button{
+    padding:12px 25px;
+    margin-left:10px;
+    font-size:16px;
+    cursor:pointer;
+}
+</style>
+
+</head>
+<body>
+
+<header>
+BugTraceAI
+</header>
+
+<div id="chat"></div>
+
+<div class="bottom">
+<input id="message" placeholder="Ask BugTraceAI...">
+<button onclick="send()">Send</button>
+</div>
+
+<script>
+
+async function send(){
+
+    const box=document.getElementById("message");
+
+    const text=box.value.trim();
+
+    if(text==="") return;
+
+    document.getElementById("chat").innerHTML +=
+    `<div class="msg user"><b>You:</b><br>${text}</div>`;
+
+    box.value="";
+
+    const response=await fetch("/chat",{
+
+        method:"POST",
+
+        headers:{
+            "Content-Type":"application/json"
+        },
+
+        body:JSON.stringify({
+            message:text
+        })
+
+    });
+
+    const data=await response.json();
+
+    document.getElementById("chat").innerHTML +=
+    `<div class="msg ai"><b>BugTraceAI:</b><br>${data.reply}</div>`;
+
+    document.getElementById("chat").scrollTop =
+        document.getElementById("chat").scrollHeight;
+
+}
+
+document.getElementById("message").addEventListener("keypress",function(e){
+    if(e.key==="Enter"){
+        send();
+    }
+});
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,11 @@
+from mcp.server.fastmcp import FastMCP
+
+mcp = FastMCP("BugTraceAI")
+
+@mcp.tool()
+def hello():
+    """Test tool."""
+    return "BugTraceAI MCP Server is working!"
+
+if __name__ == "__main__":
+    mcp.run()

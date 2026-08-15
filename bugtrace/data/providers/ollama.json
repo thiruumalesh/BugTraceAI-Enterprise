@@ -1,0 +1,19 @@
+{
+  "id": "ollama",
+  "name": "Ollama",
+  "base_url": "http://127.0.0.1:11434/v1/chat/completions",
+  "api_key_env": "",
+  "recommended": false,
+  "features": {
+    "online_mode": false,
+    "model_discovery": true
+  },
+  "models": {
+    "DEFAULT_MODEL": "mistral:latest",
+    "CODE_MODEL": "mistral:latest",
+    "ANALYSIS_MODEL": "mistral:latest",
+    "REPORTING_MODEL": "mistral:latest"
+  }
+}
+
+

@@ -1,0 +1,13 @@
+
+name: BugTraceAI
+version: 0.0.1
+schema: v1
+
+mcpServers:
+  - name: BugTraceAI
+    command: /home/kali/BugTraceAI-CLI/.venv/bin/python
+    args:
+      - -m
+      - bugtrace.mcp.server
+    env:
+      PYTHONPATH: /home/kali/BugTraceAI-CLI

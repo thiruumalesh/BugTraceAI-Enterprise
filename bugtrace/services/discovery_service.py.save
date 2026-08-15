@@ -1,0 +1,159 @@
+from concurrent.futures import ThreadPoolExecutor, as_completed
+from concurrent.futures import ThreadPoolExecutor, as_completed
+
+from bugtrace.tools.recon.katana import scan as katana_scan
+from bugtrace.tools.recon.subfinder import scan as subfinder_scan
+from bugtrace.tools.recon.waybackurls import scan as wayback_scan
+from bugtrace.tools.recon.httpx import fingerprint
+from concurrent.futures import ThreadPoolExecutor
+
+
+class DiscoveryService:
+
+
+  print("STEP 1", flush=True)
+
+    urls = set()
+
+    domain = (
+        target.replace("https://", "")
+              .replace("http://", "")
+              .split("/")[0]
+    )
+
+    print("STEP 2", flush=True)
+
+    with ThreadPoolExecutor(max_workers=3) as executor:
+
+        katana_future = executor.submit(katana_scan, target)
+        subfinder_future = executor.submit(subfinder_scan, domain)
+        wayback_future = executor.submit(wayback_scan, domain)
+
+        try:
+            urls.update(katana_future.result())
+        except Exception as e:
+            print(f"Katana failed: {e}")
+
+        try:
+            urls.update(subfinder_future.result())
+        except Exception as e:
+            print(f"Subfinder failed: {e}")
+
+        try:
+            urls.update(wayback_future.result())
+        except Exception as e:
+            print(f"Wayback failed: {e}")
+
+    print(f"Collected {len(urls)} URLs", flush=True)
+
+    if not urls:
+        urls.add(target)
+
+    urls = sorted(set(urls))
+
+    skip_ext = (
+        ".png",
+        ".jpg",
+        ".jpeg",
+        ".gif",
+        ".svg",
+        ".css",
+        ".js",
+        ".woff",
+        ".woff2",
+        ".ttf",
+        ".ico",
+        ".pdf",
+        ".zip",
+    )
+
+    urls = [
+        u for u in urls
+        if not u.lower().endswith(skip_ext)
+    ]
+
+    print(f"Fingerprinting {len(urls)} URLs", flush=True)
+
+    results = []
+
+    with ThreadPoolExecutor(max_workers=10) as executor:
+
+        fps = executor.map(fingerprint, urls)
+
+        for url, fp in zip(urls, fps):
+
+            results.append({
+                "url": url,
+                "fingerprint": fp
+            })
+
+    print("Discovery complete.", flush=True)
+
+    return results
+
+        print("STEP 1", flush=True)
+
+        urls = set()
+
+        # Katana
+        print("[*] Running Katana", flush=True)
+        try:
+            urls.update(katana_scan(target))
+        except Exception as e:
+            print("Katana:", e)
+
+        # Domain
+        domain = (
+            target.replace("https://", "")
+                  .replace("http://", "")
+                  .split("/")[0]
+        )
+
+        # Subfinder
+        print("[*] Running Subfinder", flush=True)
+        try:
+            urls.update(subfinder_scan(domain))
+        except Exception as e:
+            print("Subfinder:", e)
+
+        # Wayback
+        print("[*] Running Wayback", flush=True)
+        try:
+            urls.update(wayback_scan(domain))
+        except Exception as e:
+            print("Wayback:", e)
+
+        if not urls:
+            urls.add(target)
+
+        print(f"[+] {len(urls)} URLs discovered")
+
+        results = []
+
+        print("[*] Fingerprinting URLs...")
+
+        def worker(url):
+            try:
+                return {
+                    "url": url,
+                    "fingerprint": fingerprint(url)
+                }
+            except Exception:
+                return {
+                    "url": url,
+                    "fingerprint": ""
+                }
+
+        with ThreadPoolExecutor(max_workers=20) as executor:
+
+            futures = [
+                executor.submit(worker, url)
+                for url in sorted(urls)
+            ]
+
+            for future in as_completed(futures):
+                results.append(future.result())
+
+        print("[+] Discovery finished")
+
+        return results
