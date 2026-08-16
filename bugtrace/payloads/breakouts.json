@@ -1,7 +1,7 @@
 {
   "version": "2.0",
   "description": "Curated high-impact breakout prefixes - optimized for speed and coverage",
-  "last_updated": "2026-08-14T20:21:57.222263",
+  "last_updated": "2026-08-16T14:28:21.103881",
   "breakouts": [
     {
       "prefix": "",
@@ -125,9 +125,9 @@
       "description": "Start tag",
       "category": "xss",
       "priority": 2,
-      "success_count": 73,
+      "success_count": 74,
       "enabled": true,
-      "last_success": "2026-08-14T20:21:57.219913"
+      "last_success": "2026-08-16T14:28:21.094028"
     },
     {
       "prefix": "`",
