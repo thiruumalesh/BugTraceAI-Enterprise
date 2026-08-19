@@ -85,3 +85,4 @@ sentence_transformers>=2.0.0,<6.0
 # flake8>=6.0.0
 # mypy>=1.0.0
 
+reportlab>=4.0

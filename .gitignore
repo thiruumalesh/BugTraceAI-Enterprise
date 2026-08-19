@@ -126,3 +126,4 @@ AUDIT_P0_FIXES.md
 *.orig
 *.save
 *.broken
+.env.mobsf
