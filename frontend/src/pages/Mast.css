@@ -1,0 +1,1200 @@
+/* =========================================================
+   CALIX MAST DASHBOARD
+   ========================================================= */
+
+.mast-page {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+  padding-bottom: 35px;
+}
+
+.mast-intro {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.mast-eyebrow {
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+  color: #667085;
+  margin-bottom: 8px;
+}
+
+.mast-intro h2 {
+  margin: 0;
+  font-size: 30px;
+  letter-spacing: -0.6px;
+  color: #123b67;
+}
+
+.mast-intro p {
+  margin: 8px 0 0;
+  color: #667085;
+  font-size: 14px;
+}
+
+.mast-header-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 9px;
+  flex-wrap: wrap;
+}
+
+.mast-engine {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 14px;
+  border: 1px solid #d6efdc;
+  border-radius: 9px;
+  color: #21783a;
+  background: #f6fcf7;
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.mast-engine span {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #2da04d;
+}
+
+.mast-refresh-button,
+.mast-download-button,
+.mast-new-scan-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  min-height: 40px;
+  padding: 0 14px;
+  border: 1px solid #cfd8e3;
+  border-radius: 8px;
+  background: white;
+  color: #174a7e;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.mast-refresh-button:hover,
+.mast-download-button:hover {
+  background: #f2f7fc;
+}
+
+.mast-new-scan-button {
+  background: #155da3;
+  border-color: #155da3;
+  color: white;
+}
+
+.mast-new-scan-button:hover {
+  background: #0d4f91;
+}
+
+/* =========================================================
+   ERROR
+   ========================================================= */
+
+.mast-error-banner {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  padding: 15px 18px;
+  border: 1px solid #efc7cc;
+  border-radius: 10px;
+  background: #fff7f7;
+  color: #a8323d;
+}
+
+.mast-error-banner > div {
+  flex: 1;
+}
+
+.mast-error-banner strong {
+  font-size: 14px;
+}
+
+.mast-error-banner p {
+  margin: 4px 0 0;
+  font-size: 13px;
+  color: #69717d;
+}
+
+.mast-error-banner button {
+  border: 0;
+  background: transparent;
+  color: #a8323d;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+/* =========================================================
+   DASHBOARD SUMMARY
+   ========================================================= */
+
+.mast-dashboard-summary {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+}
+
+.mast-dashboard-summary > div {
+  background: white;
+  border: 1px solid #e4e8ee;
+  border-radius: 11px;
+  padding: 17px 19px;
+  box-shadow: 0 1px 2px rgba(16, 24, 40, 0.02);
+}
+
+.mast-dashboard-summary span {
+  display: block;
+  color: #7a8492;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 1px;
+}
+
+.mast-dashboard-summary strong {
+  display: block;
+  margin-top: 7px;
+  font-size: 26px;
+  color: #123f6d;
+}
+
+/* =========================================================
+   ACTIVE SCAN
+   ========================================================= */
+
+.mast-active-card {
+  background: white;
+  border: 1px solid #dce5ef;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 2px 7px rgba(20, 54, 90, 0.05);
+}
+
+.mast-active-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 18px 21px;
+  border-bottom: 1px solid #edf0f4;
+}
+
+.mast-progress-file {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.mast-progress-file-icon {
+  width: 48px;
+  height: 48px;
+  display: grid;
+  place-items: center;
+  border-radius: 10px;
+  background: #f0eaff;
+  color: #7046c9;
+}
+
+.mast-progress-file span {
+  display: block;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 1px;
+  color: #8a919d;
+}
+
+.mast-progress-file strong {
+  display: block;
+  margin-top: 5px;
+  font-size: 15px;
+  color: #174a7e;
+  max-width: 650px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.mast-running {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #155da3;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.mast-active-body {
+  padding: 27px 30px 25px;
+}
+
+.mast-progress-title {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.mast-progress-title span {
+  display: block;
+  color: #7d8794;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 1px;
+}
+
+.mast-progress-title h3 {
+  margin: 5px 0 0;
+  font-size: 19px;
+  color: #153f68;
+}
+
+.mast-progress-title > strong {
+  font-size: 28px;
+  color: #155da3;
+}
+
+.mast-progress-track {
+  width: 100%;
+  height: 11px;
+  margin-top: 20px;
+  overflow: hidden;
+  border-radius: 20px;
+  background: #e8edf3;
+}
+
+.mast-progress-bar {
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(
+    90deg,
+    #155da3,
+    #2f7fc5
+  );
+  transition: width 0.5s ease;
+}
+
+.mast-stage-row {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 8px;
+  margin-top: 20px;
+}
+
+.mast-stage-row > div {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  color: #a0a7b1;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.mast-stage-row span {
+  width: 24px;
+  height: 24px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: #edf1f5;
+  color: #8b95a1;
+  font-size: 11px;
+}
+
+.mast-stage-row > div.active {
+  color: #155da3;
+}
+
+.mast-stage-row > div.active span {
+  background: #e4f0fc;
+  color: #155da3;
+}
+
+.mast-active-message {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 19px;
+  padding: 12px 14px;
+  background: #f7f9fb;
+  border-radius: 7px;
+  color: #687484;
+  font-size: 12px;
+}
+
+/* =========================================================
+   UPLOAD
+   ========================================================= */
+
+.mast-upload-section,
+.mast-completed-section {
+  background: white;
+  border: 1px solid #e4e8ee;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.mast-upload-header {
+  padding: 21px 23px;
+  border-bottom: 1px solid #edf0f4;
+}
+
+.mast-upload-header > div > span,
+.mast-section-header span {
+  display: block;
+  color: #7d8794;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 1px;
+}
+
+.mast-upload-header h3,
+.mast-section-header h3 {
+  margin: 5px 0 0;
+  font-size: 20px;
+  color: #123f6d;
+}
+
+.mast-upload-header p {
+  margin: 7px 0 0;
+  color: #687484;
+  font-size: 13px;
+}
+
+.mast-dropzone {
+  margin: 22px;
+  min-height: 260px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border: 2px dashed #ccd8e7;
+  border-radius: 12px;
+  background: #fbfcfe;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.mast-dropzone:hover,
+.mast-dropzone.drag-active {
+  border-color: #5d3db2;
+  background: #f7f4ff;
+}
+
+.mast-upload-icon {
+  width: 70px;
+  height: 70px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: #f0eaff;
+  color: #7046c9;
+  margin-bottom: 15px;
+}
+
+.mast-dropzone h3 {
+  margin: 0;
+  font-size: 19px;
+  color: #174a7e;
+}
+
+.mast-dropzone p {
+  margin: 6px 0 15px;
+  color: #707783;
+  font-size: 13px;
+}
+
+.mast-browse-button {
+  min-height: 41px;
+  padding: 0 20px;
+  border: 0;
+  border-radius: 8px;
+  background: #155da3;
+  color: white;
+  font-size: 13px;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.mast-browse-button:hover {
+  background: #0d4f91;
+}
+
+.mast-upload-hint {
+  margin-top: 13px;
+  font-size: 11px;
+  color: #9299a3;
+}
+
+/* =========================================================
+   COMPLETED SCANS
+   ========================================================= */
+
+.mast-section-header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 21px 23px;
+  border-bottom: 1px solid #edf0f4;
+}
+
+.mast-section-header > strong {
+  color: #6f7b89;
+  font-size: 13px;
+}
+
+.mast-history-loading,
+.mast-empty {
+  min-height: 150px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  color: #7b8490;
+}
+
+.mast-empty strong {
+  color: #4c5968;
+  font-size: 14px;
+}
+
+.mast-empty span {
+  font-size: 12px;
+}
+
+.mast-history-row {
+  display: grid;
+  grid-template-columns:
+    minmax(200px, 1.35fr)
+    minmax(180px, 1.4fr)
+    70px
+    90px
+    120px
+    145px
+    245px;
+  gap: 15px;
+  align-items: center;
+  padding: 16px 21px;
+  border-bottom: 1px solid #edf0f4;
+}
+
+.mast-history-row:last-child {
+  border-bottom: 0;
+}
+
+.mast-history-row:hover {
+  background: #fbfcfe;
+}
+
+.mast-history-app {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  min-width: 0;
+}
+
+.mast-history-icon {
+  width: 42px;
+  height: 42px;
+  flex: 0 0 auto;
+  display: grid;
+  place-items: center;
+  border-radius: 9px;
+  background: #f0eaff;
+  color: #7046c9;
+}
+
+.mast-history-app strong {
+  display: block;
+  color: #173f67;
+  font-size: 14px;
+}
+
+.mast-history-app span {
+  display: block;
+  margin-top: 4px;
+  color: #7d8794;
+  font-size: 11px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.mast-history-file span,
+.mast-history-type span,
+.mast-history-score span,
+.mast-history-severity span,
+.mast-history-date span {
+  display: block;
+  color: #929aa6;
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 0.8px;
+}
+
+.mast-history-file strong,
+.mast-history-type strong,
+.mast-history-score strong,
+.mast-history-date strong {
+  display: block;
+  margin-top: 5px;
+  color: #334e68;
+  font-size: 12px;
+}
+
+.mast-history-file strong {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.mast-history-score strong {
+  font-size: 16px;
+  color: #155da3;
+}
+
+.mast-history-severity > div {
+  display: flex;
+  gap: 5px;
+  margin-top: 6px;
+}
+
+.mast-history-severity b {
+  padding: 4px 6px;
+  border-radius: 5px;
+  font-size: 10px;
+}
+
+.mast-history-severity .h {
+  background: #fff0f0;
+  color: #c62828;
+}
+
+.mast-history-severity .m {
+  background: #fff7df;
+  color: #a56b00;
+}
+
+.mast-history-severity .i {
+  background: #eef4f9;
+  color: #56708a;
+}
+
+.mast-history-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 6px;
+}
+
+.mast-history-actions button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  min-height: 32px;
+  padding: 0 9px;
+  border: 1px solid #d4dce5;
+  border-radius: 7px;
+  background: white;
+  color: #174a7e;
+  font-size: 11px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.mast-history-actions button:hover {
+  background: #f1f7fd;
+  border-color: #8fb5d8;
+}
+
+/* =========================================================
+   ASSESSMENT
+   ========================================================= */
+
+.mast-application-card {
+  display: grid;
+  grid-template-columns:
+    auto
+    minmax(180px, 1fr)
+    100px
+    minmax(260px, 1.4fr)
+    minmax(250px, 1.1fr);
+  gap: 20px;
+  align-items: center;
+  padding: 20px 23px;
+  background: white;
+  border: 1px solid #e4e8ee;
+  border-radius: 12px;
+}
+
+.mast-app-icon {
+  width: 52px;
+  height: 52px;
+  display: grid;
+  place-items: center;
+  border-radius: 11px;
+  background: #f0eaff;
+  color: #7046c9;
+}
+
+.mast-application-card span {
+  display: block;
+  color: #8b94a1;
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 1px;
+}
+
+.mast-application-card strong {
+  display: block;
+  margin-top: 5px;
+  color: #173f67;
+  font-size: 13px;
+}
+
+.mast-application-card small {
+  display: block;
+  margin-top: 4px;
+  color: #7d8794;
+  font-size: 11px;
+}
+
+.mast-hash {
+  overflow-wrap: anywhere;
+}
+
+.mast-summary-grid {
+  display: grid;
+  grid-template-columns:
+    minmax(270px, 1.4fr)
+    repeat(3, 1fr);
+  gap: 13px;
+}
+
+.mast-score-card,
+.mast-stat {
+  background: white;
+  border: 1px solid #e4e8ee;
+  border-radius: 11px;
+  min-height: 105px;
+  padding: 18px;
+}
+
+.mast-score-card {
+  display: flex;
+  align-items: center;
+  gap: 17px;
+}
+
+.mast-score-circle {
+  width: 74px;
+  height: 74px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  border: 6px solid #8054dc;
+  border-radius: 50%;
+  color: #173f67;
+  font-size: 24px;
+  font-weight: 800;
+}
+
+.mast-score-circle small {
+  font-size: 8px;
+  color: #7d8794;
+}
+
+.mast-score-card span,
+.mast-stat span {
+  display: block;
+  color: #89929e;
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 1px;
+}
+
+.mast-score-card strong {
+  display: block;
+  margin-top: 7px;
+  font-size: 17px;
+  color: #173f67;
+}
+
+.mast-stat {
+  border-top: 3px solid #8795a5;
+}
+
+.mast-stat.high {
+  border-top-color: #e33b45;
+}
+
+.mast-stat.medium {
+  border-top-color: #e49b18;
+}
+
+.mast-stat.info {
+  border-top-color: #71859a;
+}
+
+.mast-stat strong {
+  display: block;
+  margin-top: 9px;
+  font-size: 29px;
+  color: #173f67;
+}
+
+.mast-mini-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 13px;
+}
+
+.mast-mini-grid > div {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  column-gap: 11px;
+  align-items: center;
+  background: white;
+  border: 1px solid #e4e8ee;
+  border-radius: 10px;
+  padding: 15px;
+}
+
+.mast-mini-grid svg {
+  grid-row: span 2;
+  color: #7046c9;
+}
+
+.mast-mini-grid span {
+  color: #89929e;
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 0.8px;
+}
+
+.mast-mini-grid strong {
+  margin-top: 3px;
+  color: #173f67;
+  font-size: 21px;
+}
+
+.mast-findings-section {
+  background: white;
+  border: 1px solid #e4e8ee;
+  border-radius: 11px;
+  overflow: hidden;
+}
+
+.mast-finding {
+  display: grid;
+  grid-template-columns: 74px 1fr;
+  gap: 15px;
+  padding: 17px 20px;
+  border-bottom: 1px solid #edf0f4;
+}
+
+.mast-finding:last-child {
+  border-bottom: 0;
+}
+
+.mast-severity {
+  align-self: start;
+  padding: 8px 6px;
+  border-radius: 5px;
+  text-align: center;
+  font-size: 10px;
+  font-weight: 900;
+}
+
+.mast-severity.high {
+  background: #ffe7e7;
+  color: #c62828;
+}
+
+.mast-severity.medium {
+  background: #fff1cf;
+  color: #a56600;
+}
+
+.mast-severity.low {
+  background: #e8f4ff;
+  color: #216a9f;
+}
+
+.mast-severity.info {
+  background: #edf2f7;
+  color: #52677c;
+}
+
+.mast-finding-body h4 {
+  margin: 0;
+  color: #173f67;
+  font-size: 15px;
+  line-height: 1.4;
+}
+
+.mast-finding-body p {
+  margin: 7px 0 0;
+  color: #596575;
+  font-size: 12px;
+  line-height: 1.55;
+}
+
+.mast-remediation {
+  margin-top: 9px;
+  padding: 10px 12px;
+  background: #f7f9fb;
+  border-radius: 6px;
+  color: #4e5b69;
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.mast-finding-body small {
+  display: block;
+  margin-top: 8px;
+  color: #89929e;
+  font-size: 10px;
+}
+
+.mast-state {
+  min-height: 450px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  color: #647184;
+  font-size: 14px;
+}
+
+.mast-spinner {
+  animation: mast-spin 1s linear infinite;
+}
+
+@keyframes mast-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
+@media (max-width: 1400px) {
+  .mast-history-row {
+    grid-template-columns:
+      minmax(180px, 1.3fr)
+      minmax(150px, 1.2fr)
+      60px
+      75px
+      105px
+      120px
+      220px;
+  }
+
+  .mast-history-date {
+    display: none;
+  }
+}
+
+@media (max-width: 1100px) {
+  .mast-dashboard-summary,
+  .mast-mini-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .mast-summary-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .mast-score-card {
+    grid-column: span 2;
+  }
+
+  .mast-application-card {
+    grid-template-columns: auto 1fr 100px;
+  }
+
+  .mast-application-card > div:nth-last-child(-n + 2) {
+    grid-column: span 3;
+  }
+
+  .mast-history-row {
+    grid-template-columns: 1fr 90px 100px 230px;
+  }
+
+  .mast-history-file,
+  .mast-history-score,
+  .mast-history-severity {
+    display: none;
+  }
+}
+
+@media (max-width: 760px) {
+  .mast-intro {
+    flex-direction: column;
+  }
+
+  .mast-header-actions {
+    justify-content: flex-start;
+  }
+
+  .mast-dashboard-summary,
+  .mast-mini-grid,
+  .mast-summary-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .mast-score-card {
+    grid-column: auto;
+  }
+
+  .mast-stage-row {
+    grid-template-columns: 1fr;
+  }
+
+  .mast-active-top {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .mast-history-row {
+    grid-template-columns: 1fr;
+  }
+
+  .mast-history-type {
+    display: none;
+  }
+
+  .mast-history-actions {
+    justify-content: flex-start;
+  }
+
+  .mast-application-card {
+    grid-template-columns: auto 1fr;
+  }
+
+  .mast-application-card > div:nth-last-child(-n + 2) {
+    grid-column: span 2;
+  }
+}
+
+/* =========================================================
+   CALIX MAST - LARGE / READABLE UI OVERRIDES
+   ========================================================= */
+
+/* General MAST page text */
+.mast-page {
+  font-size: 15px;
+}
+
+/* Intro */
+.mast-eyebrow {
+  font-size: 13px;
+}
+
+.mast-intro h2 {
+  font-size: 34px;
+}
+
+.mast-intro p {
+  font-size: 16px;
+}
+
+/* Buttons */
+.mast-refresh-button,
+.mast-download-button,
+.mast-new-scan-button {
+  min-height: 44px;
+  padding: 0 17px;
+  font-size: 15px;
+}
+
+/* Engine status */
+.mast-engine {
+  font-size: 14px;
+  padding: 11px 16px;
+}
+
+/* Error */
+.mast-error-banner strong {
+  font-size: 16px;
+}
+
+.mast-error-banner p {
+  font-size: 14px;
+}
+
+/* Summary cards */
+.mast-dashboard-summary span {
+  font-size: 13px;
+}
+
+.mast-dashboard-summary strong {
+  font-size: 30px;
+}
+
+/* Active scan */
+.mast-progress-file span {
+  font-size: 12px;
+}
+
+.mast-progress-file strong {
+  font-size: 17px;
+}
+
+.mast-running {
+  font-size: 15px;
+}
+
+.mast-progress-title span {
+  font-size: 12px;
+}
+
+.mast-progress-title h3 {
+  font-size: 22px;
+}
+
+/* Progress/status labels */
+.mast-progress-step,
+.mast-progress-message,
+.mast-progress-status {
+  font-size: 14px !important;
+}
+
+/* Upload */
+.mast-upload-title,
+.mast-upload-section h3 {
+  font-size: 20px !important;
+}
+
+.mast-upload-section p,
+.mast-upload-help,
+.mast-dropzone p {
+  font-size: 15px !important;
+}
+
+/* Findings */
+.mast-findings-section {
+  font-size: 15px;
+}
+
+.mast-findings-section h3,
+.mast-findings-section h2 {
+  font-size: 22px !important;
+}
+
+.mast-finding-title {
+  font-size: 16px !important;
+}
+
+.mast-finding-description,
+.mast-finding-remediation,
+.mast-finding-section,
+.mast-finding-meta {
+  font-size: 14px !important;
+  line-height: 1.55 !important;
+}
+
+/* Severity badges */
+.mast-severity,
+.mast-severity-badge {
+  font-size: 13px !important;
+  font-weight: 800;
+}
+
+/* Completed scan section */
+.mast-completed-section {
+  font-size: 15px;
+}
+
+.mast-completed-section h3,
+.mast-completed-section h2 {
+  font-size: 22px !important;
+}
+
+.mast-completed-row {
+  min-height: 72px;
+}
+
+.mast-completed-row strong {
+  font-size: 15px !important;
+}
+
+.mast-completed-row span,
+.mast-completed-row small {
+  font-size: 13px !important;
+}
+
+.mast-completed-row button,
+.mast-completed-row a {
+  font-size: 13px !important;
+}
+
+/* Application information */
+.mast-application-name {
+  font-size: 18px !important;
+}
+
+.mast-application-package,
+.mast-application-file {
+  font-size: 14px !important;
+}
+
+/* Score */
+.mast-score {
+  font-size: 30px !important;
+}
+
+/* Cards / metrics */
+.mast-card-label,
+.mast-metric-label {
+  font-size: 13px !important;
+}
+
+.mast-card-value,
+.mast-metric-value {
+  font-size: 28px !important;
+}
+
+/* Make long filenames readable */
+.mast-progress-file strong,
+.mast-completed-row strong {
+  line-height: 1.4;
+}
+
+/* Buttons in history */
+.mast-completed-row button,
+.mast-completed-row .mast-download-button {
+  min-height: 38px;
+  padding: 0 12px;
+}
+
+/* Responsive */
+@media (max-width: 1100px) {
+  .mast-page {
+    font-size: 14px;
+  }
+
+  .mast-intro h2 {
+    font-size: 30px;
+  }
+
+  .mast-dashboard-summary strong {
+    font-size: 26px;
+  }
+}
+
